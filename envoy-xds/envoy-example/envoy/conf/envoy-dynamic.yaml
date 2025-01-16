@@ -44,7 +44,7 @@ static_resources:
                   address:
                     socket_address:
                       # control-plane xds 控制面服务地址
-                      address: 192.168.2.17
+                      address: 192.168.3.24
                       port_value: 9090
       http2_protocol_options: {}
       name: grpc_xds_cluster

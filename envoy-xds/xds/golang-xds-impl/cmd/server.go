@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"fmt"
-	"math"
 	"net"
 	"os"
 	"strconv"
@@ -53,7 +52,7 @@ func main() {
 		// grpc.MaxRecvMsgSize(math.MaxInt64),
 	)
 
-	// 创建 GRPC 服务
+	// 创建 gRPC 服务
 	grpcServer := grpc.NewServer(grpcOptions...)
 
 	// 开启 debug 日志模式，在 callback 中打印日志。
@@ -90,7 +89,7 @@ func main() {
 	errCh := make(chan error)
 
 	go func() {
-		// envoy 需要监听的 xds server 端口。
+		// envoy 需要监听的 xDS server 端口。
 		fmt.Printf("GRPC server started in %v ... \n", constant.SERVER_PORT)
 		lis, err := net.Listen(constant.NETWORK_MODEL, fmt.Sprintf(":%d", constant.SERVER_PORT))
 		if err != nil {
@@ -102,7 +101,7 @@ func main() {
 		}
 	}()
 
-	// 启动动态测试服务, 可以通过请求 /test 进行版本更替 [并不是 GRPC 服务端口]
+	// 启动 xDS 资源动态更新测试 服务, 可以通过请求 /test 进行版本更替 [并不是 GRPC 服务端口]
 	go func() {
 		r := gin.New()
 		r.GET(constant.TEST_URI, func(ctx *gin.Context) {
