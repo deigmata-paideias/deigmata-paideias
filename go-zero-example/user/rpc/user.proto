@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package user;
+
+option go_package = "./user";
+
+message IdRequest {
+  string id = 1;
+}
+
+message UserResponse {
+  string id = 1;
+  string name = 2;
+  string gender = 3;
+}
+
+service User {
+  rpc getUser(IdRequest) returns (UserResponse);
+}
+
+// 根目录执行：
+// goctl rpc protoc user/rpc/user.proto --go_out=user/rpc/types --go-grpc_out=user/rpc/types --zrpc_out=user/rpc

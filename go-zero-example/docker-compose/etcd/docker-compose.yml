@@ -1,0 +1,41 @@
+version: "3.3"
+
+services:
+
+  etcd:
+    container_name: go-zero-etcd
+    hostname: etcd
+    image: bitnami/etcd:3
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    privileged: true
+    environment:
+      - "ETCD_ADVERTISE_CLIENT_URLS=http://0.0.0.0:2379"
+      - "ETCD_LISTEN_CLIENT_URLS=http://0.0.0.0:2379"
+      - "ETCD_LISTEN_PEER_URLS=http://0.0.0.0:2380"
+      - "ETCD_INITIAL_ADVERTISE_PEER_URLS=http://0.0.0.0:2380"
+      #参数指不用密码可以连接
+      - "ALLOW_NONE_AUTHENTICATION=yes"
+      - "ETCD_INITIAL_CLUSTER=node1=http://0.0.0.0:2380"
+      - "ETCD_NAME=node1"
+      - "ETCD_DATA_DIR=/opt/bitnami/etcd/data"
+    ports:
+      # 修改了端口，2379 在 windows 是保留端口
+      - 8079:2379
+      - 8080:2380
+    networks:
+      - go-zero-example
+
+  # etcd ui console.
+  etcdkeeper:
+    image: deltaprojects/etcdkeeper
+    container_name: go-zero-etcdkeeper
+    ports:
+      - 8088:8080
+    networks:
+      - go-zero-example
+
+networks:
+  go-zero-example:

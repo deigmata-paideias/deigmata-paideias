@@ -1,0 +1,9 @@
+Name: VideoService
+Host: 0.0.0.0
+Port: 8888
+
+UserRpc:
+  Etcd:
+    Hosts:
+      - 127.0.0.1:8079
+    key:  user.rpc

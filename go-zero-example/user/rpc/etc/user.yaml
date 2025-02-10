@@ -1,0 +1,9 @@
+Name: user.rpc
+# user 微服务端口
+ListenOn: 0.0.0.0:18080
+Etcd:
+  Hosts:
+  # etcd 地址
+  - 127.0.0.1:8079
+  # etcd 服务发现的名字
+  Key: user.rpc
