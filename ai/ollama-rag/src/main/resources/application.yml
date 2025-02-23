@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: ollama-rag
+
+  ai:
+#    dashscope:
+#      api-key: ${AI_DASHSCOPE_API_KEY}
+#      chat:
+#        options:
+#          model: deepseek-r1
+#      embedding:
+#        enabled: false
+
+    ollama:
+      base-url: http://127.0.0.1:11434
+      chat:
+        model: deepseek-r1:8b
+#        enabled: false
+      embedding:
+        model: nomic-embed-text:latest
+
+    vectorstore:
+      elasticsearch:
+        index-name: ollama-rag-embedding-index
+        similarity: cosine
+        dimensions: 768
+
+  elasticsearch:
+    uris: http://127.0.0.1:9200
