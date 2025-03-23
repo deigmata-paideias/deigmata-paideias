@@ -1,0 +1,24 @@
+spring:
+  main:
+    web-application-type: none
+    banner-mode: off
+
+  ai:
+    mcp:
+      server:
+        name: my-mcp-example-server
+        version: 0.0.1
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/data?useSSL=false&serverTimezone=UTC
+    username: root
+    password: 'root'
+
+logging:
+  pattern:
+    console:
+
+mybatis-plus:
+  global-config:
+    banner: off

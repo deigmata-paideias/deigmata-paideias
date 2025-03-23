@@ -1,0 +1,19 @@
+{
+  "mcpServers": {
+    "my-mcp-example-server": {
+      "command": "java",
+      "args": [
+        "-jar",
+        "-Dspring.ai.mcp.server.stdio=true",
+        "-Dspring.main.web-application-type=none",
+        "-Dlogging.pattern.console=",
+        "-Dspring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver",
+        "-Dspring.datasource.url=jdbc:mysql://localhost:3306/data?useSSL=false&serverTimezone=UTC",
+        "-Dspring.datasource.username=root",
+        "-Dspring.datasource.password=root",
+        "D:\\AI\\examples\\mcp-example\\mcp-server-example\\target\\mcp-server-example-1.0-SNAPSHOT.jar"
+      ],
+      "env": {}
+    }
+  }
+}

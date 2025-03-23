@@ -1,0 +1,5 @@
+### Test API
+GET http://127.0.0.1:8080/mcp/chat?prompt="将 user 转为大写"
+
+### MySQL API
+GET http://127.0.0.1:8080/mcp/chat?prompt="帮我从数据库查询一下 wangwu 的联系信息"

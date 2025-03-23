@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: mcp-client-example
+
+  mandatory-file-encoding: UTF-8
+
+  ai:
+    dashscope:
+      api-key: ${AI_DASHSCOPE_API_KEY}
+
+    mcp:
+      client:
+        stdio:
+          servers-configuration: classpath:mcp-servers-config.json
+
+
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+logging:
+  charset:
+    file: UTF-8
+
+  # 打印 mcp 日志信息
+  level:
+    io.modelcontextprotocol.client: debug
+    io.modelcontextprotocol.spec: debug
+
+    org.springframework.ai: debug
