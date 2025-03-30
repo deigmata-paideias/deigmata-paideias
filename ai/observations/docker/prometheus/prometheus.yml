@@ -1,0 +1,14 @@
+scrape_configs:
+  - job_name: "prometheus"
+    static_configs:
+      - targets: ["localhost:9090"]
+    # prometheus 上面是默认的数据
+
+  # 抓取任务配置
+  - job_name: 'policy-prometheus'
+    # 抓取目标的路径,其中?替换为要监听的服务前缀端口
+    # micrometer 端点默认没有前缀
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      # 抓取任务的目标地址，可以使用数组的形式配置多个端口监听
+      - targets: ["192.168.99.117:8080"]

@@ -1,0 +1,21 @@
+services:
+
+  prometheus:
+    container_name: "sa-prometheus"
+    hostname: "sa-prometheus"
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+
+  grafana:
+    image: grafana/grafana
+    hostname: "sa-grafana"
+    container_name: "sa-grafana"
+    ports:
+      - "3000:3000"
+
+networks:
+  bridge:
+    driver: bridge

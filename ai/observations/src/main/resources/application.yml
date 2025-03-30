@@ -1,0 +1,52 @@
+spring:
+  application:
+    name: "spring-ai-observations-example"
+
+  ai:
+    # 注意：观测数据可能存在敏感信息！
+    chat:
+      client:
+        observations:
+          # 记录调用输入
+          include-input: true
+      observations:
+        # 记录 LLMs 输出
+        include-completion: true
+        # 记录 prompt
+        include-prompt: true
+        include-error-logging: true
+
+# 部署时不配置，使用默认配置
+management:
+  endpoints:
+    web:
+      exposure:
+        # 开放所有外部端点
+        include: "*"
+  endpoint:
+    health:
+      # 应用健康状态检查，携带详细新学年
+      show-details: always
+  tracing:
+    sampling:
+      # trace 采样信息，记录每个请求
+      probability: 1.0
+
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: "*"
+#  endpoint:
+#    health:
+#      show-details: always
+#  tracing:
+#    sampling:
+#      probability: 1.0
+#  prometheus:
+#    metrics:
+#      export:
+#        enabled: true
+#  metrics:
+#    tags:
+#      application: ${spring.application.name}
