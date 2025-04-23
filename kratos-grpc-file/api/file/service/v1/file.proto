@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package file;
+
+import "google/api/annotations.proto";
+
+option go_package = "helloworld/api/file/service/v1;v1";
+
+service FileService {
+  rpc UploadFile(UploadRequest) returns (UploadResponse) {
+    option (google.api.http) = {
+      post: "/upload"
+      body: "*"
+    };
+  }
+  rpc DownloadFile(DownloadRequest) returns (DownloadResponse) {
+    option (google.api.http) = {
+      get: "/download/{filename}"
+    };
+  }
+}
+
+message UploadRequest {
+  string filename = 1;
+  bytes file_data = 2;
+}
+
+message UploadResponse {
+  string message = 1;
+}
+
+message DownloadRequest {
+  string filename = 1;
+}
+
+message DownloadResponse {
+  bytes file_data = 1;
+}
