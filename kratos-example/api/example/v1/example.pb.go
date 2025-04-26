@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.36.6
 // 	protoc        v3.19.6
-// source: example/v1/example.proto
+// source: api/example/v1/example.proto
 
 package v1
 
@@ -10,6 +10,7 @@ import (
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	wrapperspb "google.golang.org/protobuf/types/known/wrapperspb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -32,7 +33,7 @@ type HelloRequest struct {
 
 func (x *HelloRequest) Reset() {
 	*x = HelloRequest{}
-	mi := &file_example_v1_example_proto_msgTypes[0]
+	mi := &file_api_example_v1_example_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -44,7 +45,7 @@ func (x *HelloRequest) String() string {
 func (*HelloRequest) ProtoMessage() {}
 
 func (x *HelloRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_example_v1_example_proto_msgTypes[0]
+	mi := &file_api_example_v1_example_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -57,7 +58,7 @@ func (x *HelloRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HelloRequest.ProtoReflect.Descriptor instead.
 func (*HelloRequest) Descriptor() ([]byte, []int) {
-	return file_example_v1_example_proto_rawDescGZIP(), []int{0}
+	return file_api_example_v1_example_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *HelloRequest) GetName() string {
@@ -69,15 +70,22 @@ func (x *HelloRequest) GetName() string {
 
 // The response message containing the greetings
 type HelloReply struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state   protoimpl.MessageState `protogen:"open.v1"`
+	Message string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
+	// 使用 wrapper 类型 自动生成 hasXXX
+	NoRespStringType         *wrapperspb.StringValue   `protobuf:"bytes,2,opt,name=noRespStringType,proto3" json:"noRespStringType,omitempty"`
+	NoRespFloatType          *wrapperspb.FloatValue    `protobuf:"bytes,3,opt,name=noRespFloatType,proto3" json:"noRespFloatType,omitempty"`
+	NoRespRepeatedStringType []*wrapperspb.StringValue `protobuf:"bytes,4,rep,name=noRespRepeatedStringType,proto3" json:"noRespRepeatedStringType,omitempty"`
+	// 不用 wrapper 类型
+	RespStringType string `protobuf:"bytes,5,opt,name=respStringType,proto3" json:"respStringType,omitempty"`
+	Code           int32  `protobuf:"varint,6,opt,name=code,proto3" json:"code"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
 }
 
 func (x *HelloReply) Reset() {
 	*x = HelloReply{}
-	mi := &file_example_v1_example_proto_msgTypes[1]
+	mi := &file_api_example_v1_example_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -89,7 +97,7 @@ func (x *HelloReply) String() string {
 func (*HelloReply) ProtoMessage() {}
 
 func (x *HelloReply) ProtoReflect() protoreflect.Message {
-	mi := &file_example_v1_example_proto_msgTypes[1]
+	mi := &file_api_example_v1_example_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -102,7 +110,7 @@ func (x *HelloReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HelloReply.ProtoReflect.Descriptor instead.
 func (*HelloReply) Descriptor() ([]byte, []int) {
-	return file_example_v1_example_proto_rawDescGZIP(), []int{1}
+	return file_api_example_v1_example_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *HelloReply) GetMessage() string {
@@ -112,67 +120,112 @@ func (x *HelloReply) GetMessage() string {
 	return ""
 }
 
-var File_example_v1_example_proto protoreflect.FileDescriptor
+func (x *HelloReply) GetNoRespStringType() *wrapperspb.StringValue {
+	if x != nil {
+		return x.NoRespStringType
+	}
+	return nil
+}
 
-const file_example_v1_example_proto_rawDesc = "" +
+func (x *HelloReply) GetNoRespFloatType() *wrapperspb.FloatValue {
+	if x != nil {
+		return x.NoRespFloatType
+	}
+	return nil
+}
+
+func (x *HelloReply) GetNoRespRepeatedStringType() []*wrapperspb.StringValue {
+	if x != nil {
+		return x.NoRespRepeatedStringType
+	}
+	return nil
+}
+
+func (x *HelloReply) GetRespStringType() string {
+	if x != nil {
+		return x.RespStringType
+	}
+	return ""
+}
+
+func (x *HelloReply) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+var File_api_example_v1_example_proto protoreflect.FileDescriptor
+
+const file_api_example_v1_example_proto_rawDesc = "" +
 	"\n" +
-	"\x18example/v1/example.proto\x12\n" +
-	"example.v1\x1a\x1cgoogle/api/annotations.proto\"\"\n" +
+	"\x1capi/example/v1/example.proto\x12\n" +
+	"example.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1egoogle/protobuf/wrappers.proto\"\"\n" +
 	"\fHelloRequest\x12\x12\n" +
-	"\x04name\x18\x01 \x01(\tR\x04name\"&\n" +
+	"\x04name\x18\x01 \x01(\tR\x04name\"\xcd\x02\n" +
 	"\n" +
 	"HelloReply\x12\x18\n" +
-	"\amessage\x18\x01 \x01(\tR\amessage2`\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage\x12H\n" +
+	"\x10noRespStringType\x18\x02 \x01(\v2\x1c.google.protobuf.StringValueR\x10noRespStringType\x12E\n" +
+	"\x0fnoRespFloatType\x18\x03 \x01(\v2\x1b.google.protobuf.FloatValueR\x0fnoRespFloatType\x12X\n" +
+	"\x18noRespRepeatedStringType\x18\x04 \x03(\v2\x1c.google.protobuf.StringValueR\x18noRespRepeatedStringType\x12&\n" +
+	"\x0erespStringType\x18\x05 \x01(\tR\x0erespStringType\x12\x12\n" +
+	"\x04code\x18\x06 \x01(\x05R\x04code2`\n" +
 	"\aExample\x12U\n" +
 	"\bSayHello\x12\x18.example.v1.HelloRequest\x1a\x16.example.v1.HelloReply\"\x17\x82\xd3\xe4\x93\x02\x11\x12\x0f/example/{name}B\"Z kratos-example/api/example/v1;v1b\x06proto3"
 
 var (
-	file_example_v1_example_proto_rawDescOnce sync.Once
-	file_example_v1_example_proto_rawDescData []byte
+	file_api_example_v1_example_proto_rawDescOnce sync.Once
+	file_api_example_v1_example_proto_rawDescData []byte
 )
 
-func file_example_v1_example_proto_rawDescGZIP() []byte {
-	file_example_v1_example_proto_rawDescOnce.Do(func() {
-		file_example_v1_example_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_example_v1_example_proto_rawDesc), len(file_example_v1_example_proto_rawDesc)))
+func file_api_example_v1_example_proto_rawDescGZIP() []byte {
+	file_api_example_v1_example_proto_rawDescOnce.Do(func() {
+		file_api_example_v1_example_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_api_example_v1_example_proto_rawDesc), len(file_api_example_v1_example_proto_rawDesc)))
 	})
-	return file_example_v1_example_proto_rawDescData
+	return file_api_example_v1_example_proto_rawDescData
 }
 
-var file_example_v1_example_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
-var file_example_v1_example_proto_goTypes = []any{
-	(*HelloRequest)(nil), // 0: example.v1.HelloRequest
-	(*HelloReply)(nil),   // 1: example.v1.HelloReply
+var file_api_example_v1_example_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_api_example_v1_example_proto_goTypes = []any{
+	(*HelloRequest)(nil),           // 0: example.v1.HelloRequest
+	(*HelloReply)(nil),             // 1: example.v1.HelloReply
+	(*wrapperspb.StringValue)(nil), // 2: google.protobuf.StringValue
+	(*wrapperspb.FloatValue)(nil),  // 3: google.protobuf.FloatValue
 }
-var file_example_v1_example_proto_depIdxs = []int32{
-	0, // 0: example.v1.Example.SayHello:input_type -> example.v1.HelloRequest
-	1, // 1: example.v1.Example.SayHello:output_type -> example.v1.HelloReply
-	1, // [1:2] is the sub-list for method output_type
-	0, // [0:1] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+var file_api_example_v1_example_proto_depIdxs = []int32{
+	2, // 0: example.v1.HelloReply.noRespStringType:type_name -> google.protobuf.StringValue
+	3, // 1: example.v1.HelloReply.noRespFloatType:type_name -> google.protobuf.FloatValue
+	2, // 2: example.v1.HelloReply.noRespRepeatedStringType:type_name -> google.protobuf.StringValue
+	0, // 3: example.v1.Example.SayHello:input_type -> example.v1.HelloRequest
+	1, // 4: example.v1.Example.SayHello:output_type -> example.v1.HelloReply
+	4, // [4:5] is the sub-list for method output_type
+	3, // [3:4] is the sub-list for method input_type
+	3, // [3:3] is the sub-list for extension type_name
+	3, // [3:3] is the sub-list for extension extendee
+	0, // [0:3] is the sub-list for field type_name
 }
 
-func init() { file_example_v1_example_proto_init() }
-func file_example_v1_example_proto_init() {
-	if File_example_v1_example_proto != nil {
+func init() { file_api_example_v1_example_proto_init() }
+func file_api_example_v1_example_proto_init() {
+	if File_api_example_v1_example_proto != nil {
 		return
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_example_v1_example_proto_rawDesc), len(file_example_v1_example_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_api_example_v1_example_proto_rawDesc), len(file_api_example_v1_example_proto_rawDesc)),
 			NumEnums:      0,
 			NumMessages:   2,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
-		GoTypes:           file_example_v1_example_proto_goTypes,
-		DependencyIndexes: file_example_v1_example_proto_depIdxs,
-		MessageInfos:      file_example_v1_example_proto_msgTypes,
+		GoTypes:           file_api_example_v1_example_proto_goTypes,
+		DependencyIndexes: file_api_example_v1_example_proto_depIdxs,
+		MessageInfos:      file_api_example_v1_example_proto_msgTypes,
 	}.Build()
-	File_example_v1_example_proto = out.File
-	file_example_v1_example_proto_goTypes = nil
-	file_example_v1_example_proto_depIdxs = nil
+	File_api_example_v1_example_proto = out.File
+	file_api_example_v1_example_proto_goTypes = nil
+	file_api_example_v1_example_proto_depIdxs = nil
 }

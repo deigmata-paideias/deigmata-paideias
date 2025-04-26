@@ -1,150 +1,70 @@
-# Kratos Example
-
-#### 项目创建
+# Kratos 拦截器
 
 ```shell
-go install github.com/go-kratos/kratos/cmd/kratos/v2@latest
-
-kratos new kratos-example
-
-cd kratos-example
-
-# 初始化换进
-make init
+curl 127.0.0.1:8000/example/test
 ```
 
-#### 项目结构
+## http server 相关用法
 
-```markdown
-kratos-example
-├── Dockerfile		# license
-├── LICENSE		
-├── Makefile		# makefilw 指令
-├── go.mod
-├── go.sum
-├── internal		# 业务逻辑代码
-│   ├── biz			# 业务逻辑
-│   ├── conf		# 跟目录 config 配置的解析
-│   ├── data		# biz 的 repo 接口的实现，数据层
-│   ├── server		# grpc 和 http 的 server
-│   └── service		# 实现了 api 定义的服务层，类似 DDD 的 application 层，处理 DTO 到 biz 领域实体的转换(DTO -> DO)
-├── openapi.yaml	 # openapi 文档
-├── api				# v1 是 api 版本号 proto 文件是接口定义，http.go 和 grpc.go 是生成的，不需要修改。http web 服务，grpc 微服务 rpc 调用
-├── configs			# 项目配置，timeout 地址等
-├── cmd				# 可执行的 main 入口，其中 wire 是依赖注入组件
-└── third_party		 # proto 依赖的东西，make api 编译的时候会一起编译
-```
+### middleware 中间件 
 
-#### 接口开发
+https://go-kratos.dev/docs/component/transport/http/ 
 
-现在生成的 kratos 项目中修改 api 下面的二级目录为项目名
-
-之后将 greeter.proto 改为项目名.proto. error_reason.proto 也修改下
-
-运行 make api，windows 运行
-
-```shell
- protoc --proto_path=api --proto_path=third_party --go_out=paths=source_relative:api --go-http_out=paths=source_relative:api --go-grpc_out=paths=source_relative:api --openapi_out=fq_schema_naming=true,default_response=false:. api/example/v1/*.proto
-```
-
-修改 service 和 server、biz、data 的相关 proto 代码，按照顺序依次修改：
-
-service 实现 api，serivce 负责和 biz 进行业务交互，biz 和 data 进行数据交互，server 启动 http 和 grpc server。
-
-更改完成代码之后：
-
-```shell
-cd /cmd/kratos-example/
-
-# 重新维护依赖注入关系
-wire
-```
-
-启动
-
-```shell
-kratos run
-```
-
-访问修改之后的 http://localhost:8000/example/yuluo 接口，成功
-
-#### 接入数据库
-
-数据库相关的代码都放在 data 下面。
-
-使用 wire 在外部初始化完成 db client 之后，注入到  data 中
+`Middleware(m ...middleware.Middleware) ServerOption`
 
 ```go
-func NewDB(c *conf.Data) *gorm.DB {
-
-	dsn := "root:082916@tcp(127.0.0.1:3306)/data?charset=utf8mb4&parseTime=True&loc=Local"
-	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
-	if err != nil {
-		panic(err)
-	}
-
-	// 不建议在生产环境上使用
-	if err = db.AutoMigrate(); err != nil {
-		panic(err)
-	}
-
-	return db
+var opts = []http.ServerOption{
+    http.Middleware(
+        recovery.Recovery(),
+		// kratos 自带中间件注册
+        logging.Server(logger),
+    ),
 }
 ```
 
-在 data 中注入 db 
+### Filter 拦截器
 
-```go
-type Data struct {
-	db *gorm.DB
-}
+自定义看代码吧。
 
-// NewData .
-func NewData(c *conf.Data, logger log.Logger, db *gorm.DB) (*Data, func(), error) {
-	cleanup := func() {
-		log.NewHelper(logger).Info("closing the data resources")
-	}
-	return &Data{db: db}, cleanup, nil
-}
+期望看到的输出：
+```text
+2025/04/25 23:56:35 过滤器：ReqUrlFilter()#Request URL: /example/test
+2025/04/25 23:56:35 中间件：RealIpFilterMiddleware()#Request Real IP: 127.0.0.1:2894
 ```
 
-在  wire 中加入
+## Kratos jsonPb 空值不返回配置
 
-```go
-var ProviderSet = wire.NewSet(NewData, NewDB, NewExampleRepo)
-```
+kratos issue：https://github.com/go-kratos/kratos/issues/1952
+ptotobuf 不添加 omitempty：https://github.com/golang/protobuf/issues/1371
 
-随后更新 wire ，观察到 NewDB 已经被 wire 管理注入。
-
-使用配置文件管理 mysql dsn:
-
-```yml
-data:
-  database:
-    dsn: root:082916@tcp(127.0.0.1:3306)/data?charset=utf8mb4&parseTime=True&loc=Local
-```
-
-更新 config/config.pb.proto
-
-```proto
-message Data {
-  message Database {
-    string driver = 1;
-  }
-//  暂时不用 redis 注释调
-//  message Redis {
-//    string network = 1;
-//    string addr = 2;
-//    google.protobuf.Duration read_timeout = 3;
-//    google.protobuf.Duration write_timeout = 4;
-//  }
-  Database database = 1;
-//  Redis redis = 2;
+```protobuf
+message HelloReply {
+  string message = 1;
+  string noRespStringType = 2;
+  float noRespFloatType = 3;
+  repeated string noRespRepeatedStringType = 4;
 }
 ```
 
-执行 make config 更新 config.pb.go
+正常返回，存在默认输出：
 
-win 执行 ` protoc --proto_path=internal/conf --proto_path=third_party --go_out=paths=source_relative:internal/conf ./internal/conf/*.proto`
+```json
+{"message":"Hello test","noRespStringType":"","noRespFloatType":0,"noRespRepeatedStringType":[]}
+```
 
-使用 kratos run 验证
+### 1. ResponseEncoder(en EncodeResponseFunc) ServerOption
+
+自定义 pb 的 json 序列化处理策略。
+
+https://go-kratos.dev/docs/component/transport/http/#responseencoderen-encoderesponsefunc-serveroption
+
+配置 kratos 的响应编码器: encoder 包：
+
+看到如下输出：
+```text
+经过了 CustomProtoJson ..............................
+```
+
+### 2. 自定义响应编码器
+
+不使用 kratos 的 json 序列化器，直接使用 json 序列化器

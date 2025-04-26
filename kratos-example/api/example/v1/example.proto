@@ -3,6 +3,7 @@ syntax = "proto3";
 package example.v1;
 
 import "google/api/annotations.proto";
+import "google/protobuf/wrappers.proto";
 
 option go_package = "kratos-example/api/example/v1;v1";
 
@@ -24,4 +25,14 @@ message HelloRequest {
 // The response message containing the greetings
 message HelloReply {
   string message = 1;
+
+  // 使用 wrapper 类型 自动生成 hasXXX
+  google.protobuf.StringValue noRespStringType = 2;
+  google.protobuf.FloatValue noRespFloatType = 3;
+  repeated google.protobuf.StringValue noRespRepeatedStringType = 4;
+
+  // 不用 wrapper 类型
+  string respStringType = 5;
+
+  int32 code = 6;
 }
