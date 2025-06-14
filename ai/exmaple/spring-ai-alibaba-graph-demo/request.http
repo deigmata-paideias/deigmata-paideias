@@ -1,0 +1,18 @@
+### 正面
+GET http://localhost:8081/graph/demo/chat?query="This product is excellent, I love it!"
+
+# Praise, no action taken.
+
+### 负面 1
+GET http://localhost:8081/graph/demo/chat?query="这东西真垃圾啊，天呐，太难用了！"
+
+# ```json
+# {"keywords": ["东西", "垃圾", "难用"], "category_name": "product quality"}
+# ```
+
+### 负面 2
+GET http://localhost:8081/graph/demo/chat?query="The product broke after one day, very disappointed."
+
+# ```json
+# {"keywords": ["product", "broke", "one day", "disappointed"], "category_name": "product quality"}
+# ```
