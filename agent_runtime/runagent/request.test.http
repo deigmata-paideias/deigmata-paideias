@@ -1,0 +1,18 @@
+# health
+$ curl 127.0.0.1:8450/api/v1/health
+{
+  "status": "healthy",
+  "server": "RunAgent FastAPI Local Server",
+  "timestamp": "2025-08-25T20:57:06.200358",
+  "uptime_seconds": 235.55792903900146,
+  "version": "1.0.0",
+  "agent_id": "5adca1bc-755e-40fd-9c0f-17d7fddaf2ba",
+  "agent_name": "problem_solver",
+  "framework": "langgraph"
+}
+
+# Invoke 中间的是 runagent 的 agent id 
+curl -X POST http://localhost:8450/api/v1/agents/5adca1bc-755e-40fd-9c0f-17d7fddaf2ba/execute/generic \
+  -H "Content-Type: application/json" \
+  -d '{"query": "Tell me a story"}' \
+  --no-buffer

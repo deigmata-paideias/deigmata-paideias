@@ -1,0 +1,91 @@
+1. 启动速度慢
+2. config json template、created/updated 字段必须？
+3. 文档不是最新的
+4. 在 /Users/shown/.runagent/runagent_local.db 有一个 sqlite 文件残留
+
+# 启动日志
+
+# 有报错？似乎有 bug
+$ zsh runagent/start.sh
+
+
+╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                                        │
+│                                                    ┌─────────────────────────────────┐                                                 │
+│                                                    │                                 │                                                 │
+│                                                    │              🤖                 │                                                 │
+│                                                    │              🏃‍♂️                 │                                                │
+│                                                    │                                 │                                                 │
+│                                                    │         RunAgent                │                                                 │
+│                                                    │         Starting...             │                                                 │
+│                                                    │                                 │                                                 │
+│                                                    └─────────────────────────────────┘                                                 │
+│                                                                                                                                        │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+🗃️ Initializing database: /Users/shown/.runagent/runagent_local.db
+✅ Database initialized successfully
+⚡ Starting local server with auto port allocation...
+🆕 Creating new agent for path: /Users/shown/workspace/python/agent_runtime/runagent
+📋 Framework detected: PythonicType.LANGGRAPH
+🔌 Allocated address: 127.0.0.1:8450
+🟢 Adding agent within default limits (1/5)
+🔌 Allocated address: 127.0.0.1:8450
+✅ New agent created with ID: 5adca1bc-755e-40fd-9c0f-17d7fddaf2ba
+🔌 Allocated address: 127.0.0.1:8450
+No API key configured - middleware sync disabled
+DEBUG: Resolving entrypoint - filepath: /Users/shown/workspace/python/agent_runtime/runagent/langgraph_agent.py, module: app.invoke
+DEBUG: Split module - primary: app, secondary: invoke
+DEBUG: Resolved primary module: <langgraph.graph.state.CompiledStateGraph object at 0x104e27380>
+DEBUG: Secondary attributes to resolve: ['invoke']
+DEBUG: Resolved attribute invoke: <bound method Pregel.invoke of <langgraph.graph.state.CompiledStateGraph object at 0x104e27380>>
+DEBUG: Final resolved module: <bound method Pregel.invoke of <langgraph.graph.state.CompiledStateGraph object at 0x104e27380>>
+Resolving ('app.invoke', <bound method Pregel.invoke of <langgraph.graph.state.CompiledStateGraph object at 0x104e27380>>)
+🌐 URL: http://127.0.0.1:8450
+📖 Docs: http://127.0.0.1:8450/docs
+No API key configured - middleware sync disabled
+
+🔄 Middleware Sync Status:
+   Status: ⚠️ DISABLED
+   Reason: API key not configured
+   💡 Setup: runagent setup --api-key <key>
+   📊 Local invocations will only be stored locally
+2025-08-25 20:53:10,761 - INFO - FastAPI server starting...
+INFO:runagent_agent_5adca1bc-755e-40fd-9c0f-17d7fddaf2ba:FastAPI server starting...
+2025-08-25 20:53:10,764 - INFO - Debug mode: OFF
+INFO:runagent_agent_5adca1bc-755e-40fd-9c0f-17d7fddaf2ba:Debug mode: OFF
+2025-08-25 20:53:10,765 - INFO - Server URL: http://127.0.0.1:8450
+INFO:runagent_agent_5adca1bc-755e-40fd-9c0f-17d7fddaf2ba:Server URL: http://127.0.0.1:8450
+2025-08-25 20:53:10,766 - INFO - Docs URL: http://127.0.0.1:8450/docs
+INFO:runagent_agent_5adca1bc-755e-40fd-9c0f-17d7fddaf2ba:Docs URL: http://127.0.0.1:8450/docs
+Middleware sync disabled (no API key configured)
+Middleware Sync Status:
+   Status: ❌ DISABLED
+   💡 Configure API key to enable sync
+2025-08-25 20:53:10,767 - WARNING - Middleware sync disabled - logs stored locally only
+WARNING:runagent_agent_5adca1bc-755e-40fd-9c0f-17d7fddaf2ba:Middleware sync disabled - logs stored locally only
+
+📋 Available endpoints:
+   • GET  /api/v1 - Root endpoint showing server info and available agents
+   • GET  /api/v1/health - Health check endpoint
+   • GET  /api/v1/agents/5adca1bc-755e-40fd-9c0f-17d7fddaf2ba/architecture - Get agent architecture endpoint
+   • GET  /api/v1/agents/5adca1bc-755e-40fd-9c0f-17d7fddaf2ba/invocations - Get invocation history for this agent
+   • GET  /api/v1/agents/5adca1bc-755e-40fd-9c0f-17d7fddaf2ba/invocations/stats - Get invocation statistics for this agent
+   • GET  /api/v1/invocations/{invocation_id} - Get details of a specific invocation
+   • POST  /api/v1/agents/5adca1bc-755e-40fd-9c0f-17d7fddaf2ba/execute/generic - Run a deployed agent with full invocation tracking and 
+middleware sync
+Use Ctrl+C to stop the server
+🔧 Debug mode: OFF
+📖 API Docs: http://127.0.0.1:8450/docs
+
+🆔 Agent ID: 5adca1bc-755e-40fd-9c0f-17d7fddaf2ba
+📊 Invocation tracking: ENABLED
+   • View stats: GET /api/v1/agents/5adca1bc-755e-40fd-9c0f-17d7fddaf2ba/invocations/stats
+   • View history: GET /api/v1/agents/5adca1bc-755e-40fd-9c0f-17d7fddaf2ba/invocations
+2025-08-25 20:53:10,770 - INFO - Starting uvicorn server...
+INFO:runagent_agent_5adca1bc-755e-40fd-9c0f-17d7fddaf2ba:Starting uvicorn server...
+2025-08-25 20:53:10,771 - INFO - Agent sync failed - running in local-only mode
+INFO:runagent_agent_5adca1bc-755e-40fd-9c0f-17d7fddaf2ba:Agent sync failed - running in local-only mode
+INFO:     Started server process [9336]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8450 (Press CTRL+C to quit)
