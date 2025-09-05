@@ -11,8 +11,8 @@ dev:
 
 .PHONY: build
 build:
-	CGO_ENABLED=0 go build -o bin -ldflags "$(GO_LDFLAGS)" cmd/main.go
+	CGO_ENABLED=0 go build -o bin/collector -ldflags "$(GO_LDFLAGS)" cmd/main.go
 
 .PHONY: prod
 prod:
-	bin/main server --config etc/config.yml
+	bin/collector server --config etc/config.yml
