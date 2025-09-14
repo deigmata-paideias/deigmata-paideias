@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package helloworld.v1;
+
+import "google/api/annotations.proto";
+
+option go_package = "kratos/api/user/v1;v1";
+
+service User {
+  rpc GetUser (UserRequest) returns (UserResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/user/{id}"
+    };
+  }
+}
+
+// The request message containing the user's name.
+message UserRequest {
+  string id = 1;
+}
+
+// The response message containing the greetings
+message UserResponse {
+  string name = 1;
+}

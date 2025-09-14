@@ -1,0 +1,5 @@
+### 从网关请求 user svc
+GET http://127.0.0.1:8080/gw/api/v1/users/hi
+
+### RPC
+GET http://localhost:8080/gw/api/v1/users/rpc/1111

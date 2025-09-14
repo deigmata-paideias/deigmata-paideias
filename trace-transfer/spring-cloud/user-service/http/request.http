@@ -1,0 +1,6 @@
+### 简单 HTTP 请求
+GET http://localhost:8081/api/v1/users/hi
+
+### RPC
+
+GET http://localhost:8081/api/v1/users/rpc/2222
