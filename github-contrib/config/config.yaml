@@ -1,0 +1,24 @@
+# GitHub 贡献收集器配置文件
+github:
+  # GitHub 用户名
+  username: "yuluo-yx"
+  
+  # GitHub Personal Access Token (可选，用于增加API请求限制)
+  # 获取方式: https://github.com/settings/tokens
+  token: ""
+  
+  # 目标仓库列表 (格式: owner/repo)
+  repositories:
+    - "alibaba/spring-ai-alibaba"
+    # - "另一个仓库/名称"
+  
+# 输出配置
+output:
+  # 报告保存目录
+  report_dir: "./report"
+  
+  # 是否包含草稿PR
+  include_draft: false
+  
+  # 是否包含已关闭但未合并的PR
+  include_closed: true
