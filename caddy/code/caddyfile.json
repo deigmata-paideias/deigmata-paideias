@@ -1,0 +1,23 @@
+{
+  "apps": {
+    "http": {
+      "servers": {
+        "srv0": {
+          "listen": [
+            ":2015"
+          ],
+          "routes": [
+            {
+              "handle": [
+                {
+                  "body": "Hello, world! By embedded Caddyfile.",
+                  "handler": "static_response"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}
