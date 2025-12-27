@@ -86,7 +86,8 @@ spring-boot-starter-web 在 4.x 中被标记废弃，新的包变为 spring-boot
 Sping AI 的不兼容升级点：
 
 手动线程池配置 -> 虚拟线程池配置
-Jackson 序列化配置，Jackson2ObjectMapperBuilderCustomizer 弃用，推荐用 JsonMapperBuilderCustomizer；
+
+Jackson 序列化配置（最复杂的），Jackson2ObjectMapperBuilderCustomizer 弃用，推荐用 JsonMapperBuilderCustomizer；
 https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-4.0-Migration-Guide#upgrading-jackson
 
 Spring Retry 依赖管理变化，需要明确指定版本，在 DashScopeXXModel 里有用到。
