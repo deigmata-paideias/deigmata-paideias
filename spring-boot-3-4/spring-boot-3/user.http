@@ -1,0 +1,14 @@
+### Add post
+
+POST http://localhost:8080/api/v1/users
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "email": "test@example.com",
+  "age": 18
+}
+
+### GET
+
+GET http://localhost:8080/api/v1/users/3

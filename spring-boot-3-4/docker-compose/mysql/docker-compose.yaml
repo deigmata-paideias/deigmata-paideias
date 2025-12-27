@@ -1,0 +1,14 @@
+services:
+
+  mysql:
+    image: mysql:8.0
+    container_name: shown-mysql
+    volumes:
+      - ./conf/my.cnf:/etc/my.cnf
+    environment:
+      - "MYSQL_ROOT_PASSWORD=root"
+      - "MYSQL_DATABASE=saa_data_agent"
+      - "TZ=Asia/Shanghai"
+    ports:
+      - "3306:3306"
+
