@@ -79,7 +79,7 @@ Spring Boot Version: 4.0.1
 spring-boot-starter-web 在 4.x 中被标记废弃，新的包变为 spring-boot-starter-webmvc，旧包将在之后移除
 :::
 
-## 不兼容升级
+## Spring AI 的不兼容升级
 
 ### 框架
 
