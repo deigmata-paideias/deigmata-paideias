@@ -7,7 +7,7 @@ services:
       - ./conf/my.cnf:/etc/my.cnf
     environment:
       - "MYSQL_ROOT_PASSWORD=root"
-      - "MYSQL_DATABASE=saa_data_agent"
+      - "MYSQL_DATABASE=user"
       - "TZ=Asia/Shanghai"
     ports:
       - "3306:3306"
