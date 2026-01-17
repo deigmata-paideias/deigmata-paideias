@@ -1,6 +1,4 @@
-# Select 
-
-使用 select 实现的简单 TCP 服务器 demo，可以处理多个客户端连接
+## IO Multiplexing
 
 ```shell
 gcc select_server.c -o select_server
